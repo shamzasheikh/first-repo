@@ -1,0 +1,105 @@
+<<<<<<< HEAD
+#- name: Install the etcd server and the etcdctl command line utility, move binaries
+#  copy:
+#    src: '{{ allcerts_dir }}/etcd-v3.3.9-linux-amd64/etcd*'
+#    dest: /usr/local/bin/
+#    owner: root
+#    group: root
+#    mode: 0755
+
+
+- name: Copy etcd and etcdctl
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/
+    owner: "root"
+    group: "root"
+    mode: 0755
+  with_fileglob:
+    - "{{ allcerts_dir }}/etcd-v3.3.9-linux-amd64/etcd*"
+=======
+- name: Download and Install the etcd Binaries
+  get_url:
+    url: "{{ etcd_url }}"
+    mode: '0440'
+
+
+- name: Extract and install the etcd server and the etcdctl command line utility
+  unarchive:
+    src: etcd-v3.3.9-linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    extra_opts: [--strip-components=1]
+
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+
+- name: Configure the etcd Server
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+<<<<<<< HEAD
+    owner: "{{ linux_user }}"
+    group: "{{ linux_user }}"
+=======
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+  with_items:
+  - /etc/etcd
+  - /var/lib/etcd
+
+<<<<<<< HEAD
+- name: Copy certificates and key
+=======
+- name: Configure the etcd Server
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+  copy:
+    src: "{{ item }}"
+    dest: /etc/etcd
+    mode: '0644'
+  with_items:
+<<<<<<< HEAD
+  - "{{ allcerts_dir }}/ca.crt"
+  - "{{ allcerts_dir }}/etcd-server.key"
+  - "{{ allcerts_dir }}/etcd-server.crt"
+
+
+- name: Retrieve the internal IP address of the master(etcd) nodes
+  shell: hostname -i
+  register: INTERNAL_IP
+
+- name: Set the etcd name to match the hostname of the current compute instance
+  shell: hostname -s  
+  register: ETCD_NAME
+=======
+  - ca.crt 
+  - etcd-server.key 
+  - etcd-server.crt
+
+
+- name: Retrieve the internal IP address of the master(etcd) nodes
+  command: INTERNAL_IP=$(ip addr show enp0s8 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
+
+- name: Set the etcd name to match the hostname of the current compute instance
+  command: ETCD_NAME=$(hostname -s)
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+
+- name: Copy etcd.service.j2
+  template:
+    src: "etcd.service.j2"
+    dest: "/etc/systemd/system/etcd.service"
+
+
+- name: Just force systemd to reread configs
+  systemd:
+    daemon_reload: yes
+
+- name: Start and enable the etcd Server
+  systemd: 
+    name: etcd
+    state: started
+    enabled: yes
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

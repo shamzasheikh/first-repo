@@ -1,0 +1,52 @@
+<<<<<<< HEAD
+linux_user: shamza
+kubectl_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl
+etcd_url: https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz
+kube_apiserver_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-apiserver
+kube_controller_manager_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-controller-manager
+kube_scheduler_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-scheduler
+kube_proxy_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-proxy
+kubelet_url: https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubelet
+cni_url: https://github.com/containernetworking/plugins/releases/download/v0.7.5/cni-plugins-amd64-v0.7.5.tgz
+
+cni_tar: cni-plugins-amd64-v0.7.5.tgz
+etcd_tar: etcd-v3.3.9-linux-amd64.tar.gz
+masters_ips: 10.240.0.2,10.240.0.31
+kube_configs: /var/lib/kube_configs
+
+allcerts_dir: '{{ playbook_dir }}/artifacts'
+
+token_id: 07401b
+key_size: 2048
+key_type: RSA
+LOADBALANCER_ADDRESS: 34.105.68.224
+master1_ip: 10.240.0.31
+master2_ip: 10.240.0.32
+master1_host: control1
+master2_host: control2
+#Comma separted entries of al masters (master=https://IP:2380) for --initial-cluster in roles/etcd_cluster/templates/etcd.service.j2
+master_ip_port: control1=https://10.240.0.31:2380,control2=https://10.240.0.32:2380
+etcd_ip_port: control1=https://10.240.0.31:2379,control2=https://10.240.0.32:2379
+service_cluster_ip_range: 10.96.0.0/24
+cluster_cidr: 192.168.5.0/24
+
+#allkubeconfig_dir: /home/shamza/k8_thw/kconfig
+=======
+kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl"
+key_size: 2048
+key_type: RSA
+etcd_url: "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd67.tar.gz"
+kube-apiserver_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-apiserver"
+kube-controller-manager_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-controller-manager"
+kube-scheduler_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-scheduler"
+kube_proxy_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-proxy"
+kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubelet"
+kube_configs: "/var/lib/kube_configs"
+
+cni_url: "https://github.com/containernetworking/plugins/releases/download/v0.7.5/cni-plugins-amd64-v0.7.5.tgz"
+
+cni_tar: cni-plugins-amd64-v0.7.5.tgz
+
+masters_ips: 
+
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

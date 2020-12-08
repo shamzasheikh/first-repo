@@ -1,0 +1,77 @@
+---
+<<<<<<< HEAD
+#- name: Provisioning a CA and Generating TLS Certificates
+#  hosts: localhost
+#  vars_files:
+#   - variable.yaml
+#  gather_facts: yes
+#  #become: yes
+#  roles:
+#  - ca_tls
+
+#- name: Generating Kubernetes Configuration Files for Authentication, Data Encryption Config and Key, Download all binaries
+ # hosts: localhost
+ # vars_files:
+  # - variable.yaml
+  #gather_facts: yes
+  #roles:
+  #- kubeconfig
+  #- dataencrypt
+  #- binaries
+
+#- name: Bootstrapping the etcd Cluster
+#  hosts: controlplane
+#  vars_files:
+#   - variable.yaml
+#  gather_facts: yes
+#  become: yes
+  #become_user: "{{ linux_user }}"
+#  become_method: sudo
+#  roles:
+#  #- etcd_cluster
+#  #- control_plane
+
+
+
+#- name: Bootstrapping the etcd Cluster
+#  hosts: loadbalancer
+#  vars_files:
+#   - variable.yaml
+#  gather_facts: yes
+#  become: yes
+  #become_user: "{{ linux_user }}"
+#  become_method: sudo
+#  roles:
+#  - loadb
+
+
+
+
+- name: Bootstrapping the worker Cluster
+  hosts: workers
+=======
+- name: Generating the Data Encryption Config and Key
+  hosts: loadbalancer
+  vars_files:
+   - variable.yaml
+  gather_facts: yes
+  become: yes
+  roles:
+  - ca_tls
+
+- name: distribute certs
+  hosts: controlplane
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+  vars_files:
+   - variable.yaml
+  gather_facts: yes
+  become: yes
+<<<<<<< HEAD
+  #become_user: "{{ linux_user }}"
+  #  become_method: sudo
+  roles:
+  - worker_nodes
+=======
+  roles:
+  - distribute
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

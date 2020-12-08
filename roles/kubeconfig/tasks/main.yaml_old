@@ -1,0 +1,56 @@
+- name: Copy admin.kubeconfig.j2
+  template:
+    src: "admin.kubeconfig.j2"
+    dest: "{{ kube_configs/admin.kubeconfig }}"
+- name: Copy kube-controller-manager.kubeconfig.j2
+  template:
+    src: "kube-controller-manager.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+- name: Copy kube-proxy.kubeconfig.j2
+  template:
+    src: "kube-proxy.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-proxy.kubeconfig }}"
+- name: Copy admin.kubeconfig.j2
+- name: Copy kube-scheduler.kubeconfig.j2
+  template:
+    src: "kube-scheduler.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-scheduler.kubeconfig }}"
+- name: Distribute Kubernetes Configuration Files
+  copy:
+   src: "{{ item }}"
+   dest: "{{ destfol }}"
+  with_items:
+  - "{{ kube_configs/admin.kubeconfig }}"
+  - "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+  - "{{ kube_configs/kube-proxy.kubeconfig }}"
+  - "{{ kube_configs/kube-scheduler.kubeconfig }}"
+
+
+
+- name: Copy admin.kubeconfig.j2
+  template:
+    src: "admin.kubeconfig.j2"
+    dest: "{{ kube_configs/admin.kubeconfig }}"
+- name: Copy kube-controller-manager.kubeconfig.j2
+  template:
+    src: "kube-controller-manager.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+- name: Copy kube-proxy.kubeconfig.j2
+  template:
+    src: "kube-proxy.kubeconfig.j2"
+- name: Copy admin.kubeconfig.j2
+    dest: "{{ kube_configs/kube-proxy.kubeconfig }}"
+- name: Copy kube-scheduler.kubeconfig.j2
+  template:
+    src: "kube-scheduler.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-scheduler.kubeconfig }}"
+- name: Distribute Kubernetes Configuration Files
+  copy:
+   src: "{{ item }}"
+   dest: "{{ destfol }}"
+  with_items:
+   - "{{ kube_configs/admin.kubeconfig }}"
+   - "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+   - "{{ kube_configs/kube-proxy.kubeconfig }}"
+   - "{{ kube_configs/kube-scheduler.kubeconfig }}"
+

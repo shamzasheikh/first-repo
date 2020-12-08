@@ -1,0 +1,147 @@
+<<<<<<< HEAD
+
+- name: Generate kubeconfig file for kube-proxy
+  shell: |
+    kubectl config set-cluster kubernetes-the-hard-way \
+    --certificate-authority={{allcerts_dir }}/ca.crt \
+    --embed-certs=true \
+    --server=https://{{ LOADBALANCER_ADDRESS }}:6443 \
+    --kubeconfig={{allcerts_dir }}/kube-proxy.kubeconfig
+
+    kubectl config set-credentials system:kube-proxy \
+    --client-certificate={{allcerts_dir }}/kube-proxy.crt \
+    --client-key={{allcerts_dir }}/kube-proxy.key \
+    --embed-certs=true \
+    --kubeconfig={{allcerts_dir }}/kube-proxy.kubeconfig
+
+    kubectl config set-context default \
+    --cluster=kubernetes-the-hard-way \
+    --user=system:kube-proxy \
+    --kubeconfig={{allcerts_dir }}/kube-proxy.kubeconfig
+
+    kubectl config use-context default --kubeconfig={{allcerts_dir }}/kube-proxy.kubeconfig
+
+
+- name: Generate kubeconfig file for kube-controller-manager
+  shell: |
+    kubectl config set-cluster kubernetes-the-hard-way \
+    --certificate-authority={{allcerts_dir }}/ca.crt \
+    --embed-certs=true \
+    --server=https://127.0.0.1:6443 \
+    --kubeconfig={{allcerts_dir }}/kube-controller-manager.kubeconfig
+
+    kubectl config set-credentials system:kube-controller-manager \
+    --client-certificate={{allcerts_dir }}/kube-controller-manager.crt \
+    --client-key={{allcerts_dir }}/kube-controller-manager.key \
+    --embed-certs=true \
+    --kubeconfig={{allcerts_dir }}/kube-controller-manager.kubeconfig
+
+    kubectl config set-context default \
+    --cluster=kubernetes-the-hard-way \
+    --user=system:kube-controller-manager \
+    --kubeconfig={{allcerts_dir }}/kube-controller-manager.kubeconfig
+
+    kubectl config use-context default --kubeconfig={{allcerts_dir }}/kube-controller-manager.kubeconfig
+
+
+- name: Generate kubeconfig file for kube-scheduler
+  shell: |
+    kubectl config set-cluster kubernetes-the-hard-way \
+    --certificate-authority={{allcerts_dir }}/ca.crt \
+    --embed-certs=true \
+    --server=https://127.0.0.1:6443 \
+    --kubeconfig={{allcerts_dir }}/kube-scheduler.kubeconfig
+
+    kubectl config set-credentials system:kube-scheduler \
+    --client-certificate={{allcerts_dir }}/kube-scheduler.crt \
+    --client-key={{allcerts_dir }}/kube-scheduler.key \
+    --embed-certs=true \
+    --kubeconfig={{allcerts_dir }}/kube-scheduler.kubeconfig
+
+    kubectl config set-context default \
+    --cluster=kubernetes-the-hard-way \
+    --user=system:kube-scheduler \
+    --kubeconfig={{allcerts_dir }}/kube-scheduler.kubeconfig
+
+    kubectl config use-context default --kubeconfig={{allcerts_dir }}/kube-scheduler.kubeconfig
+
+
+
+- name: Generate kubeconfig file for Admin
+  shell: |
+    kubectl config set-cluster kubernetes-the-hard-way \
+    --certificate-authority={{allcerts_dir }}/ca.crt \
+    --embed-certs=true \
+    --server=https://127.0.0.1:6443 \
+    --kubeconfig={{allcerts_dir }}/admin.kubeconfig
+
+    kubectl config set-credentials admin \
+    --client-certificate={{allcerts_dir }}/admin.crt \
+    --client-key={{allcerts_dir }}/admin.key \
+    --embed-certs=true \
+    --kubeconfig={{allcerts_dir }}/admin.kubeconfig
+
+    kubectl config set-context default \
+    --cluster=kubernetes-the-hard-way \
+    --user=admin \
+    --kubeconfig={{allcerts_dir }}/admin.kubeconfig
+
+    kubectl config use-context default --kubeconfig={{allcerts_dir }}/admin.kubeconfig
+=======
+- name: Copy admin.kubeconfig.j2
+  template:
+    src: "admin.kubeconfig.j2"
+    dest: "{{ kube_configs/admin.kubeconfig }}"
+- name: Copy kube-controller-manager.kubeconfig.j2
+  template:
+    src: "kube-controller-manager.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+- name: Copy kube-proxy.kubeconfig.j2
+  template:
+    src: "kube-proxy.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-proxy.kubeconfig }}"
+- name: Copy admin.kubeconfig.j2
+- name: Copy kube-scheduler.kubeconfig.j2
+  template:
+    src: "kube-scheduler.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-scheduler.kubeconfig }}"
+- name: Distribute Kubernetes Configuration Files
+  copy:
+   src: "{{ item }}"
+   dest: "{{ destfol }}"
+  with_items:
+  - "{{ kube_configs/admin.kubeconfig }}"
+  - "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+  - "{{ kube_configs/kube-proxy.kubeconfig }}"
+  - "{{ kube_configs/kube-scheduler.kubeconfig }}"
+
+
+
+- name: Copy admin.kubeconfig.j2
+  template:
+    src: "admin.kubeconfig.j2"
+    dest: "{{ kube_configs/admin.kubeconfig }}"
+- name: Copy kube-controller-manager.kubeconfig.j2
+  template:
+    src: "kube-controller-manager.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+- name: Copy kube-proxy.kubeconfig.j2
+  template:
+    src: "kube-proxy.kubeconfig.j2"
+- name: Copy admin.kubeconfig.j2
+    dest: "{{ kube_configs/kube-proxy.kubeconfig }}"
+- name: Copy kube-scheduler.kubeconfig.j2
+  template:
+    src: "kube-scheduler.kubeconfig.j2"
+    dest: "{{ kube_configs/kube-scheduler.kubeconfig }}"
+- name: Distribute Kubernetes Configuration Files
+  copy:
+   src: "{{ item }}"
+   dest: "{{ destfol }}"
+  with_items:
+   - "{{ kube_configs/admin.kubeconfig }}"
+   - "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+   - "{{ kube_configs/kube-proxy.kubeconfig }}"
+   - "{{ kube_configs/kube-scheduler.kubeconfig }}"
+
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

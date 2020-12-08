@@ -1,0 +1,21 @@
+frontend kubernetes
+<<<<<<< HEAD
+    bind {{ LOADBALANCER_ADDRESS }}:6443
+=======
+    bind 192.168.5.30:6443
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+    option tcplog
+    mode tcp
+    default_backend kubernetes-master-nodes
+
+backend kubernetes-master-nodes
+    mode tcp
+    balance roundrobin
+    option tcp-check
+<<<<<<< HEAD
+    server {{ master1_host }} {{ master1_ip }}:6443 check fall 3 rise 2
+    server {{ master1_host }} {{ master2_ip }}:6443 check fall 3 rise 2
+=======
+    server master-1 192.168.5.11:6443 check fall 3 rise 2
+    server master-2 192.168.5.12:6443 check fall 3 rise 2
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

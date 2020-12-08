@@ -1,0 +1,27 @@
+- name: Generate CA certificate
+  openssl_certificate:
+    path: '{{ allcerts_dir }}/ca.crt'
+    privatekey_path: '{{ allcerts_dir }}/ca.key'
+    csr_path: '{{ allcerts_dir }}/ca.csr'
+    provider: selfsigned
+
+- name: Generate an OpenSSL certificate signed with your own CA certificate
+  openssl_certificate:
+    path: "{{ allcerts_dir }}/{{ item }}.crt"
+    csr_path: "{{ allcerts_dir }}/{{ item }}.csr"
+    ownca_path: "{{ allcerts_dir }}/ca.crt"
+    ownca_privatekey_path: "{{ allcerts_dir }}/ca.key"
+<<<<<<< HEAD
+    #ownca_not_after: +1000d"
+=======
+    ownca_not_after: +1000d"
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+    provider: ownca
+  with_items:
+  - admin
+  - kube-controller-manager
+  - kube-proxy
+  - kube-scheduler
+  - kube-apiserver
+  - etcd-server
+  - service-account

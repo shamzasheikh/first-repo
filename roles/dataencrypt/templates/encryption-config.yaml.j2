@@ -1,0 +1,15 @@
+kind: EncryptionConfig
+apiVersion: v1
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+<<<<<<< HEAD
+              secret: {{ ENCRYPTION_KEY.stdout }}
+=======
+              secret: ${ENCRYPTION_KEY}
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+      - identity: {}

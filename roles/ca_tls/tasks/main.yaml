@@ -1,0 +1,16 @@
+- name: Create private key
+  import_tasks: key.yaml
+
+- name: Create CSR using the private key
+  import_tasks: csr.yaml
+
+- name: Sign certificate
+  import_tasks: cert.yaml
+
+<<<<<<< HEAD
+#- name: Distribute the Certificates
+#  import_tasks: dist.yaml
+=======
+- name: Distribute the Certificates
+  import_tasks: dist.yaml
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

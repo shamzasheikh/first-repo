@@ -1,0 +1,41 @@
+#- name: Create binary directory
+#  file:
+#    path: '{{ allcerts_dir }}'
+#    state: directory
+
+
+- name: Download k8s binaries
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ allcerts_dir }}"
+    mode: 0664
+  with_items:
+  - "{{ etcd_url }}"
+  - "{{ kube_apiserver_url }}"
+  - "{{ kube_controller_manager_url }}"
+  - "{{ kube_scheduler_url }}"
+  - "{{ kube_proxy_url }}"
+  - "{{ kubelet_url }}"
+  - "{{ kubectl_url }}"
+  - "{{ cni_url }}"
+
+
+- name: Extract and install the etcd server and the etcdctl command line utility
+  unarchive:
+    src: "{{ allcerts_dir }}/{{ etcd_tar }}"
+    dest: "{{ allcerts_dir }}"
+    exclude: 
+      - Documentation
+      - README-etcdctl.md  
+      - README.md  
+      - READMEv2-etcdctl.md
+    extra_opts: "--strip-components=1"
+
+- name: Extract CNI
+  unarchive:
+    src: "{{ allcerts_dir }}/{{ cni_tar }}"
+    dest: "{{ allcerts_dir }}"
+    exclude: 
+      - mk-docker-opts.sh
+      - README.md
+    mode: 0554

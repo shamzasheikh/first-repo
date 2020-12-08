@@ -1,0 +1,30 @@
+<<<<<<< HEAD
+- name: Configure the Kubernetes API Server
+  copy:
+    src: "{{ item }}"
+    dest: /var/lib/kubernetes/
+  with_items:
+  - "{{ allcerts_dir }}/ca.crt"
+  - "{{ allcerts_dir }}/ca.key"
+  - "{{ allcerts_dir }}/kube-apiserver.crt"
+  - "{{ allcerts_dir }}/kube-apiserver.key"
+  - "{{ allcerts_dir }}/service-account.key"
+  - "{{ allcerts_dir }}/service-account.crt"
+  - "{{ allcerts_dir }}/etcd-server.key"
+  - "{{ allcerts_dir }}/etcd-server.crt"
+#  - "{{ allcerts_dir }}/encryption-config.yaml"
+=======
+- name: distribute certs and keys to masters
+  copy:
+    src: "{{ item }}"
+    dest: ~/
+  with_items:
+  - ca.crt
+  - ca.key
+  - kube-apiserver.key
+  - kube-apiserver.crt
+  - service-account.key
+  - service-account.crt
+  - etcd-server.key
+  - etcd-server.crt
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

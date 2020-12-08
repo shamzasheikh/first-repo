@@ -1,0 +1,155 @@
+- name: Create the Kubernetes configuration directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+<<<<<<< HEAD
+    owner: "{{ linux_user }}"
+    group: "{{ linux_user }}"
+=======
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+  with_items:
+  - /etc/kubernetes/config
+  - /var/lib/kubernetes
+
+<<<<<<< HEAD
+#  command: chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl
+
+- name: Copy / Install the Kubernetes binaries
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/
+    owner: "root"
+    group: "root"
+    mode: 0755
+  with_items:
+  - "{{ allcerts_dir }}/kube-apiserver"
+  - "{{ allcerts_dir }}/kube-controller-manager"
+  - "{{ allcerts_dir }}/kube-scheduler"
+  - "{{ allcerts_dir }}/kubectl"
+
+=======
+- name: Download and Install the etcd Binaries
+  get_url:
+    url: "{{ item }}"
+  with_items:
+  - "{{ kube-apiserver_url }}"
+  - "{{ kube-controller-manager_url }}"
+  - "{{ kube-scheduler_url }}"
+  - "{{ kubectl_url }}"
+
+- name: Make binaries executable
+  command: chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl
+
+- name: Install the Kubernetes binaries
+  command: mv kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/local/bin/
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+
+- name: Configure the Kubernetes API Server
+  copy:
+    src: "{{ item }}"
+    dest: /var/lib/kubernetes/
+<<<<<<< HEAD
+    mode: '0644'
+  with_items:
+  - "{{ allcerts_dir }}/ca.crt"
+  - "{{ allcerts_dir }}/ca.key"
+  - "{{ allcerts_dir }}/kube-apiserver.crt"
+  - "{{ allcerts_dir }}/kube-apiserver.key"
+  - "{{ allcerts_dir }}/service-account.key"
+  - "{{ allcerts_dir }}/service-account.crt"
+  - "{{ allcerts_dir }}/etcd-server.key"
+  - "{{ allcerts_dir }}/etcd-server.crt"
+  - "{{ allcerts_dir }}/encryption-config.yaml"
+=======
+  with_items:
+  - ca.crt 
+  - ca.key 
+  - kube-apiserver.crt 
+  - kube-apiserver.key
+  - service-account.key 
+  - service-account.crt
+  - etcd-server.key 
+  - etcd-server.crt 
+  - encryption-config.yaml
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+
+- name: Register internal IP in a variable 
+  command: hostname -i
+  register: INTERNAL_IP
+
+<<<<<<< HEAD
+- name: Copy systemd unit file
+  template:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/*.j2
+
+- name: Copy the kube-scheduler kubeconfig into place
+  copy:
+    src: "{{ allcerts_dir }}/kube-scheduler.kubeconfig"
+    dest: /var/lib/kubernetes/
+  with_items:
+  - kube-controller-manager.kubeconfig
+  - kube-scheduler.kubeconfig
+  
+=======
+- name: Copy kube-apiserver.service.j2
+  template:
+    src: "kube-apiserver.service.j2"
+    dest: /etc/systemd/system/kube-apiserver.service
+
+- name: Copy the kube-controller-manager kubeconfig into place
+  copy:
+   src: "{{ kube_configs/kube-controller-manager.kubeconfig }}"
+   dest: /var/lib/kubernetes/
+
+- name: Copy kube-controller-manager.service.j2
+  template:
+    src: "kube-controller-manager.service.j2"
+    dest: /etc/systemd/system/kube-controller-manager.service.j2
+
+- name: Copy the kube-scheduler kubeconfig into place
+  copy:
+    src: "{{ kube_configs/kube-scheduler.kubeconfig }}"
+    dest: /var/lib/kubernetes/
+
+- name: Copy kube-scheduler.service.j2
+  template:
+    src: "kube-scheduler.service.j2"
+    dest: /etc/systemd/system/kube-scheduler.service
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+
+- name: Just force systemd to reread configs
+  systemd:
+    daemon_reload: yes
+
+- name: Start the Controller Services
+  systemd: 
+    name: "{{ item }}"
+    state: started 
+<<<<<<< HEAD
+    enabled: yes
+=======
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+  with_items:
+  - kube-apiserver
+  - kube-controller-manager
+  - kube-scheduler
+
+<<<<<<< HEAD
+=======
+
+ 
+
+
+
+
+
+
+
+
+
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241

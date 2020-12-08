@@ -1,0 +1,36 @@
+- name: Make sure certficate directory exists
+  file:
+    path: "{{ allcerts_dir }}"
+    state: directory
+<<<<<<< HEAD
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+=======
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+    mode: '0755'
+  
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+<<<<<<< HEAD
+    path: "{{ allcerts_dir }}/{{ item }}.key"
+=======
+    path: "{{ item }}.key"
+>>>>>>> 33ee2ddefdafe0579811146bf155c6f5a8814241
+    size: "{{ key_size }}"
+    type: "{{ key_type }}"
+    backup: yes
+  with_items:
+  - ca
+  - admin
+  - kube-controller-manager
+  - kube-proxy
+  - kube-scheduler
+  - kube-apiserver
+  - etcd-server
+  - service-account
+
+#- name: Distribute the Certificates
+#  import_tasks: dist.yaml
+
+
+ 

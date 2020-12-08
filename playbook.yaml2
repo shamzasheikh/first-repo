@@ -1,0 +1,38 @@
+---
+- name: Prerequisites and dependency setup
+  hosts: loadbalancer
+  vars_files:
+   - variable.yaml 
+  gather_facts: yes
+  become: yes
+  roles:
+  - ca_tls
+
+
+- name: Generating the Data Encryption Config and Key
+  hosts: loadbalancer
+  vars_files:
+   - variable.yaml
+  gather_facts: yes
+  become: yes
+  roles:
+  - dataencrypt
+#---
+#- name: Install Client and create certificates
+#  hosts: allservers
+#  vars_files:
+#   - variable.yaml 
+#  gather_facts: yes
+#  become: yes
+#  roles:
+#  - kubectl
+#  #  - ca_tls
+#     - kubeconfig
+#     #- name: Distrubute master certificates
+#     #  hosts: controlplane
+#     #  vars_files:
+#     #   - variable.yaml
+#     #  gather_facts: yes
+#     #  become: yes
+#     #  roles:
+#     #  - cert_dis

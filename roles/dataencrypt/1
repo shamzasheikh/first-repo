@@ -1,0 +1,9 @@
+- name: Generate an encryption key
+  shell: head -c 32 /dev/urandom | base64
+  register: ENCRYPTION_KEY
+
+- name: Copy encryption-config.yaml.j2
+  template:
+    src: "encryption-config.yaml.j2"
+    dest: "{{ allcerts_dir }}/encryption-config.yaml"
+

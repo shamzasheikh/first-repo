@@ -1,0 +1,12 @@
+- name: Download k8s binaries
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ allcerts_dir }}"
+    mode: 0664
+  with_items:
+  - "{{ etcd_url }}"
+  - "{{ kube_apiserver_url }}"
+  - "{{ kube_controller_manager_url }}"
+  - "{{ kube_scheduler_url }}"
+  - "{{ kube_proxy_url }}"
+  - "{{ kubelet_url }}"
